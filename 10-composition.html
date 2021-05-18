@@ -1,25 +1,51 @@
 <div id="app">
     {{state.counter}}
+    <comp dong="dong">
+        <div>hi</div>
+    </comp>
 </div>
 <script src="https://unpkg.com/vue@next"></script>
 <script>
-  const {
-    createApp,
-    reactive,
-  } = Vue;
-  const vm = createApp({
-    setup() {
-      const state = reactive({
-        counter: 0,
-      });
-      return {
-        state,
-      };
+  const { createApp, reactive, h, getCurrentInstance} = Vue;
+  createApp({
+    // 参数
+    setup(props, ctx) {
+      // 获取组件实例
+      const ins = getCurrentInstance()
+      console.log(ins);
+      const state = reactive({ counter: 0, });
+      setInterval(() => {state.counter++;}, 1000);
+      // 1.返回render函数上下文对象
+      return { state, };
+      // 2.返回一个渲染函数，这里自然可以是jsx
+      // return () => h('div', state.counter)
+    },
+    components: {
+      Comp: {
+        template: `
+          <div class="comp">comp
+          <slot></slot>
+          </div>`,
+        props: {
+          dong: {
+            type: String,
+            default: '',
+          },
+        },
+        setup(props, {
+          attrs,
+          slots,
+          emit,
+        }) {
+          const { dong } = props;
+          console.log(attrs, slots, emit);
+          // 原封不动使用属性
+          return { dong: props.dong };
+        },
+      },
     },
   }).mount('#app');
-  setInterval(() => {
-    vm.state.counter++;
-  }, 1000);
+
 </script>
 
 
