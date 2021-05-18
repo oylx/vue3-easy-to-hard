@@ -1,12 +1,13 @@
 <div id="app">
-    {{state.counter}}
+    <p>{{state.counter}}</p>
+    <p>{{count}}</p>
     <comp dong="dong">
         <div>hi</div>
     </comp>
 </div>
 <script src="https://unpkg.com/vue@next"></script>
 <script>
-  const { createApp, reactive, h, getCurrentInstance} = Vue;
+  const { createApp, reactive, h, getCurrentInstance, ref } = Vue;
   createApp({
     // 参数
     setup(props, ctx) {
@@ -14,10 +15,17 @@
       const ins = getCurrentInstance()
       console.log(ins);
       const state = reactive({ counter: 0, });
-      setInterval(() => {state.counter++;}, 1000);
+      setInterval(() => {
+        state.counter++;
+        count.value++
+        }, 1000);
+
+      // 单值响应式
+      const count = ref(0);
+      console.log(count.value);
       // 1.返回render函数上下文对象
-      return { state, };
-      // 2.返回一个渲染函数，这里自然可以是jsx
+      return { state, count };
+      // 2.返回一个渲染函数，这里自然可 以是jsx
       // return () => h('div', state.counter)
     },
     components: {
@@ -32,11 +40,7 @@
             default: '',
           },
         },
-        setup(props, {
-          attrs,
-          slots,
-          emit,
-        }) {
+        setup(props, { attrs, slots, emit, }) {
           const { dong } = props;
           console.log(attrs, slots, emit);
           // 原封不动使用属性
