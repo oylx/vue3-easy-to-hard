@@ -1,5 +1,5 @@
 <script type="text/x-template" id="course-list">
-    <p v-if="courses.length === 0">没有任何课程</p>
+    <p v-if="courses.length === 0">has no courses</p>
     <ul>
         <li
                 v-for="c in courses"
@@ -30,8 +30,8 @@
 
 <div id="app">
     <!--    <input type="text" v-model="course" @keydown.enter="addCourse">-->
-    <button v-on:click="addCourse">新增课程</button>
-    <course-list v-on:courses="courses"></course-list>
+    <button :click="addCourse">add course</button>
+    <course-list :courses="courses"></course-list>
 </div>
 <script src="https://unpkg.com/vue@next"></script>
 <script>
@@ -48,7 +48,7 @@
     },
     methods: {
       addCourse() {
-        this.courses.push('ai课程');
+        this.courses.push('ai');
       },
     },
   })
