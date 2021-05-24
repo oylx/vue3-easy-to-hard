@@ -7,35 +7,63 @@
 </div>
 <script src="https://unpkg.com/vue@next"></script>
 <script>
-  const { createApp, reactive, h, getCurrentInstance, ref, computed } = Vue;
+  const {
+    createApp,
+    reactive,
+    h,
+    getCurrentInstance,
+    ref,
+    computed,
+    watchEffect,
+    watch,
+  } = Vue;
   createApp({
     // 参数
     setup(props, ctx) {
       // 获取组件实例
-      const ins = getCurrentInstance()
+      const ins = getCurrentInstance();
       console.log(ins);
       // 单值响应式
       const count = ref(0);
       const state = reactive({
         counter: 0,
-        count
+        count,
       });
+      console.log(state.counter);
       setInterval(() => {
         state.counter++;
-        state.count++
-        }, 1000);
+        state.count++;
+      }, 1000);
 
       // computed :计算属性
       // 传入一个 getter 函数，返回一个不可手动修改的 Ref 对象
       // 传入一个拥有 get 和 set 函数的对象，创建一个可手动修改的计算状态
-      const x = ref(1)
+      const x = ref(1);
       const doubleX = computed({
-        get: () => x.value *2,
-        set: val => x.value = val /2
-      })
-      doubleX.value = 4
+        get: () => x.value * 2,
+        set: val => x.value = val / 2,
+      });
+      doubleX.value = 4;
       console.log(x.value); // 2
 
+      // watchEffect :副作用侦听器
+      // 立即执行传入的一个函数，并收集响应式的依赖，当依赖变更时重新运行该函数。
+      const y = ref(0);
+      watchEffect(() => console.log(y.value)); // 打印出 0
+      setTimeout(() => { y.value = y.value + 5;}, 100); // 打印出 1
+
+      // watch :侦听器
+      // watch 侦听特定数据源，并在回调函数中执行副作用。
+      // 侦听单个数据源:数据源可以是一个拥有返回值的 getter 函数，也可以是 ref
+      watch(
+        () => state.count, // 侦听一个 getter
+        (count, prevCount) => {
+          // do something
+        } )
+      const count1 = ref(0) // 直接侦听一个 ref
+      watch(count1, (count, prevCount) => {
+        // do something
+      })
 
       // 1.返回render函数上下文对象
       return { state };
@@ -54,7 +82,11 @@
             default: '',
           },
         },
-        setup(props, { attrs, slots, emit, }) {
+        setup(props, {
+          attrs,
+          slots,
+          emit,
+        }) {
           const { dong } = props;
           console.log(attrs, slots, emit);
           // 原封不动使用属性
