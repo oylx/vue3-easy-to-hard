@@ -1,9 +1,19 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import CourseList from '/comps/CourseList.vue';
-import CourseAdd from '/comps/CourseAdd.vue';
-import CourseDetail from '/comps/CourseDetail.vue';
-import NotFound from '/comps/NotFound.vue';
-import Login from '/comps/Login.vue';
+// import CourseList from '/comps/CourseList.vue';
+// import CourseAdd from '/comps/CourseAdd.vue';
+// import CourseDetail from '/comps/CourseDetail.vue';
+// import NotFound from '/comps/NotFound.vue';
+// import Login from '/comps/Login.vue';
+
+// 打包时将单个路由组件分片打包，访问时才异步加载，可以有效降低app尺寸和加载时间
+// 定义异步路由
+const pageList = ['CourseList', 'CourseAdd', 'CourseDetail', 'NotFound', 'Login']
+const CourseList = () => import('/comps/CourseList.vue');
+const CourseAdd = () => import('/comps/CourseAdd.vue');
+const CourseDetail = () => import('/comps/CourseDetail.vue');
+const NotFound = () => import('/comps/NotFound.vue');
+const Login = () => import('/comps/Login.vue');
+
 // 1.配置
 const routes = [{
   path: '/',
