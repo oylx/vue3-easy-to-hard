@@ -15,6 +15,9 @@ const routes = [{
   children: [{
     path: '/course/add',
     name: 'add',
+    meta: {
+      requireAuth: true,
+    },
     component: CourseAdd,
   }, {
     path: '/course/:id',
@@ -42,8 +45,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // 判断是否去add
-  if (to.name === 'add') {
+  // 这样就不用像之前那样写死了
+  if (to.meta.requireAuth) {
     // 判断是否登录
     if (localStorage.getItem('token')) {
       // 已登录
