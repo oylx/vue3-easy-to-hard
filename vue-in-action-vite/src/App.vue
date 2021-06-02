@@ -1,32 +1,29 @@
 <template>
-  <Comp></Comp>
+  <!-- ts˝ -->
+  <!-- <Compts></Compts> -->
   <!-- 相对地址 -->
   <!-- <img src="./assets/logo.png" alt=""> -->
   <!-- 绝对路径 -->
   <!-- <img src="/src/assets/logo.png" alt=""> -->
   <!-- 消息提示框 -->
-  <message v-if="showMsg" @close="showMsg = false">
+  <!-- <message v-if="showMsg" @close="showMsg = false">
     <template v-slot:title> 恭喜 </template>
     <template v-slot:default> 新增课程成功！ </template>
   </message>
 
   <course-add v-model:course="course" @add="addCourse"></course-add>
 
-  <course-list :courses="courses"></course-list>
+  <course-list :courses="courses"></course-list> -->
 
   <!-- 计算属性：课程总数 -->
-  <p>课程总数：{{ courseCount }}</p>
+  <!-- <p>课程总数：{{ courseCount }}</p> -->
+  <!-- 路由出口 -->
+  <router-view></router-view>
 </template>
 
 <script>
 import { reactive, onMounted, ref, toRefs, computed, watch } from "vue";
-import CourseAdd from "./components/CourseAdd.vue";
-import Comp from "./components/Comp.vue";
 export default {
-  components: {
-    "course-add": CourseAdd,
-    Comp,
-  },
   setup() {
     const state = reactive({
       courses: JSON.parse(localStorage.getItem("courses")) || [],
@@ -58,6 +55,14 @@ export default {
         }
       );
     });
+
+    fetch("/api/users")
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data);
+      });
+
+    console.log(import.meta.env.VITE_TOKEN);
 
     return { ...toRefs(state), showMsg, addCourse };
   },
