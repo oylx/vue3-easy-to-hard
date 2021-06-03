@@ -38,9 +38,9 @@ export const store = createStore({
   // 动作 - Actions 动作类似于mutations，它们主要用于:
   // 实现复杂业务逻辑,处理异步操作
   actions: {
-    inc(context) {
+    inc({ commit, dispatch, getters, }) {
       setTimeout(() => {
-        context.commit('inc');
+        commit('inc');
       }, 1000);
     },
   },
