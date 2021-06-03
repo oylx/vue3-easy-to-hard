@@ -6,19 +6,19 @@ export default {
   // 状态 - State
   state() {
     return {
-      count: 0,
+      value: 0,
     };
   },
   // 派生状态 - Getters
   getters: {
     // 方式1:Property-Style，最简单常用的方式
     doubleCount(state) {
-      return state.count * 2;
+      return state.value * 2;
     },
     // 方式2:Method-Style，可以传参的方式
     nCount(state) {
       return (n) => {
-        return state.count * n;
+        return state.value * n;
       };
     },
   },
@@ -26,13 +26,13 @@ export default {
   mutations: {
     inc(state) {
       // 必须是同步的
-      state.count++;
+      state.value++;
     },
-    [COUNT_INC](state) {
-      state.count++;
+    [COUNT_INC](state) {``
+      state.value++;
     },
     incBy(state, n) {
-      state.count += n;
+      state.value += n;
     },
   },
   // 动作 - Actions 动作类似于mutations，它们主要用于:
@@ -46,7 +46,7 @@ export default {
         setTimeout(() => {
           commit("inc");
           resolve();
-        }, 1000);
+        }, 200);
       });
     },
   },

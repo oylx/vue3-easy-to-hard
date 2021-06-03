@@ -18,9 +18,9 @@
   <!-- 计算属性：课程总数 -->
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
-  <p @click="inc">count: {{ count }}</p>
+  <p @click="inc">count: {{ value }}</p>
   <p @click="incBy(2)">incBy: {{ count1 }}</p>
-  <p @click="COUNT_INC">COUNT_INC: {{ count2.count }}</p>
+  <p @click="COUNT_INC">COUNT_INC: {{ count2.value }}</p>
   <p @click="incAsync">action inc: {{ count3 }}</p>
   <p>doubleCount: {{ doubleCount }}</p>
   <p>nCount: {{ nCount(10) }}</p>
@@ -54,15 +54,15 @@ export default {
   },
   computed: {
     // 数组方式
-    ...mapState(['']),
+    ...mapState('count', ['value']),
     // 对象方式
     ...mapState({
-      count1: state => state.count.count,
+      count1: state => state.count.value,
       // 传递字符串等效于上面用法
       count2: 'count',
       // 需要通过this访问组件内部状态时必须使用普通函数方式
       count3(state) {
-        return state.count.count + this.localCount;
+        return state.count.value + this.localCount;
       },
     }),
     // 为了正常使用,需要在映射时添加模块名作为帮助方法的参数1
