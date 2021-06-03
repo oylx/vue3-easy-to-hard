@@ -33,61 +33,75 @@
 </template>
 
 <script>
-import { reactive, onMounted, ref, toRefs, computed, watch } from "vue";
+import { reactive, onMounted, ref, toRefs, computed, watch } from 'vue';
 import NavLink from '/comps/NavLink.vue';
+import { mapState } from 'vuex';
+
 export default {
-  components: {NavLink },
+  components: { NavLink },
+  data() {
+    return {
+      localCount: 0,
+    }
+  },
+  // computed: {
+  //   ...mapState(['count']),
+  // },
+  computed: mapState({
+    // 箭头函数方式比较简洁
+    count: state => state.count,
+    // 传递字符串等效于上面用法
+    countAlias: 'count',
+    // 需要通过this访问组件内部状态时必须使用普通函数方式
+    countPlusLocalState(state) {
+      return state.count + this.localCount;
+    },
+  }),
   setup() {
     const state = reactive({
-      courses: JSON.parse(localStorage.getItem("courses")) || [],
-      course: "",
-      courseCount: computed(() => state.courses.length + "门"),
+      courses: JSON.parse(localStorage.getItem('courses')) || [],
+      course: '',
+      courseCount: computed(() => state.courses.length + '门'),
     });
 
     const showMsg = ref(false);
 
     function addCourse() {
       state.courses.push(state.course);
-      state.course = "";
+      state.course = '';
 
       showMsg.value = true;
     }
 
     onMounted(() => {
       setTimeout(() => {
-        state.courses = ["web全栈架构师", "web高级工程师"];
+        state.courses = ['web全栈架构师', 'web高级工程师'];
       }, 1000);
 
       watch(
         () => state.courses,
-        () => {
-          localStorage.setItem("courses", JSON.stringify(state.courses));
-        },
-        {
-          deep: true,
-        }
+        () => localStorage.setItem('courses', JSON.stringify(state.courses)),
+        { deep: true, }
       );
     });
 
-    fetch("/api/users")
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data);
-      });
+    fetch('/api/users').then(resp => resp.json()).then(data => {
+      console.log(data);
+    });
 
     console.log(import.meta.env.VITE_TOKEN);
 
-    return { ...toRefs(state), showMsg, addCourse };
+    return { ...toRefs(state), showMsg, addCourse, };
   },
 };
 </script>
 <style scoped>
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 0.5s ease;
-  }
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-  }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>
