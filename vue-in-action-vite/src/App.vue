@@ -18,9 +18,9 @@
   <!-- 计算属性：课程总数 -->
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
-  <p @click="$store.commit('inc')">{{ count }}</p>
-  <p @click="$store.commit('incBy', 2)">{{ doubleCount }}</p>
-  <p @click="$store.commit({ type: 'incBy1', num: 3 })">{{ nCount(3)}}</p>
+  <p @click="inc">{{ count }}</p>
+  <p @click="incBy(2)">{{ doubleCount }}</p>
+  <p @click="incBy1({ num: 3 })">{{ nCount(3)}}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
@@ -37,7 +37,7 @@
 <script>
 import { reactive, onMounted, ref, toRefs, computed, watch } from 'vue';
 import NavLink from '/comps/NavLink.vue';
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: { NavLink },
@@ -69,6 +69,7 @@ export default {
     nCount(n) {
       return this.$store.getters.nCount(n);
     },
+    ...mapMutations(['inc', 'incBy', 'incBy1']),
   },
   setup() {
     const state = reactive({
