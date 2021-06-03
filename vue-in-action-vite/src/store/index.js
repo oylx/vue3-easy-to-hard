@@ -1,10 +1,10 @@
 import { createStore } from 'vuex';
-import count from './count';
-import vuexPersist from './vuex-persist';
+import count from './modules/count';
+import vuexPersist from './plugins/vuex-persist';
 
 export const store = createStore({
   modules: {
     count,
   },
-  plugins: [vuexPersist],
+  // plugins: [vuexPersist],
 });
