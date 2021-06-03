@@ -21,6 +21,7 @@
   <p @click="inc">{{ count }}</p>
   <p @click="incBy(2)">{{ doubleCount }}</p>
   <p @click="incBy1({ num: 3 })">{{ nCount(3)}}</p>
+  <button>click</button>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
