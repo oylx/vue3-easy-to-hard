@@ -18,6 +18,7 @@
   <!-- 计算属性：课程总数 -->
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
+  <p @click="$store.commit('inc')">{{ $store.state.count }}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>

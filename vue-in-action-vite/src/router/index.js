@@ -36,7 +36,6 @@ let hasAuth = false;
 const whiteList = ['/login'];
 
 router.beforeEach((to, from, next) => {
-  debugger
   if (localStorage.getItem('token')) {
     if (hasAuth) next();
     else {
