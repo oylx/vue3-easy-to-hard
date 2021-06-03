@@ -18,9 +18,9 @@
   <!-- 计算属性：课程总数 -->
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
-  <p @click="$store.commit('inc')">{{ $store.state.count }}</p>
-  <p>{{$store.getters.doubleCount}}</p>
-  <p>{{$store.getters.nCount(3)}}</p>
+  <p @click="$store.commit('inc')">{{ count }}</p>
+  <p>{{ doubleCount }}</p>
+  <p>{{ nCount(3)}}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
@@ -58,7 +58,16 @@ export default {
     countPlusLocalState(state) {
       return state.count + this.localCount;
     },
+    doubleCount() {
+      return this.$store.getters.doubleCount;
+    }
   }),
+  methods: {
+    // nCount适合用method映射
+    nCount(n) {
+      return this.$store.getters.nCount(n);
+    },
+  },
   setup() {
     const state = reactive({
       courses: JSON.parse(localStorage.getItem('courses')) || [],
