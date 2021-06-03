@@ -19,8 +19,8 @@
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
   <p @click="$store.commit('inc')">{{ count }}</p>
-  <p>{{ doubleCount }}</p>
-  <p>{{ nCount(3)}}</p>
+  <p @click="$store.commit('incBy', 2)">{{ doubleCount }}</p>
+  <p @click="$store.commit({ type: 'incBy1', num: 3 })">{{ nCount(3)}}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
