@@ -18,10 +18,12 @@
   <!-- 计算属性：课程总数 -->
   <!-- <p>课程总数：{{ courseCount }}</p> -->
   <!-- 路由出口 -->
-  <p @click="inc">{{ count }}</p>
-  <p @click="incBy(2)">{{ doubleCount }}</p>
-  <p @click="incBy1({ num: 3 })">{{ nCount(3)}}</p>
-  <p @click="incAction">{{ count }}</p>
+  <p @click="inc">count: {{ count }}</p>
+  <p @click="incBy(2)">incBy: {{ count1 }}</p>
+  <p @click="COUNT_INC">COUNT_INC: {{ count2.count }}</p>
+  <p @click="incAsync">action inc: {{ count3 }}</p>
+  <p>doubleCount: {{ doubleCount }}</p>
+  <p>nCount: {{ nCount(10) }}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
@@ -41,38 +43,39 @@ import NavLink from '/comps/NavLink.vue';
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import { store } from './store'
 
+console.log(store);
+
 export default {
   components: { NavLink },
   data() {
     return {
-      localCount: 0,
+      localCount: 10,
     }
   },
-  // computed: {
-  //   ...mapState(['count']),
-  // },
   computed: {
+    // 数组方式
+    ...mapState(['']),
     // 对象方式
     ...mapState({
-      // 箭头函数方式比较简洁
-      count: state => state.count,
+      count1: state => state.count.count,
       // 传递字符串等效于上面用法
-      countAlias: 'count',
+      count2: 'count',
       // 需要通过this访问组件内部状态时必须使用普通函数方式
-      countPlusLocalState(state) {
-        return state.count + this.localCount;
+      count3(state) {
+        return state.count.count + this.localCount;
       },
     }),
-    // 数组方式
-    ...mapGetters(['doubleCount'])
+    // 为了正常使用,需要在映射时添加模块名作为帮助方法的参数1
+    ...mapGetters('count', ['doubleCount']),
   },
   methods: {
     // nCount适合用method映射
     nCount(n) {
-      return this.$store.getters.nCount(n);
+      // 代码里访问时使用path
+      return this.$store.getters['count/nCount'](n);
     },
-    ...mapMutations(['inc', 'incBy', 'incBy1']),
-    ...mapActions(['incAction'])
+    ...mapMutations('count', ['inc', 'incBy', 'COUNT_INC']),
+    ...mapActions('count', { incAsync: 'inc' }),
   },
   setup() {
     const state = reactive({
