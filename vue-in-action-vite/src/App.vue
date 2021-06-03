@@ -37,7 +37,7 @@
 <script>
 import { reactive, onMounted, ref, toRefs, computed, watch } from 'vue';
 import NavLink from '/comps/NavLink.vue';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   components: { NavLink },
@@ -49,19 +49,22 @@ export default {
   // computed: {
   //   ...mapState(['count']),
   // },
-  computed: mapState({
-    // 箭头函数方式比较简洁
-    count: state => state.count,
-    // 传递字符串等效于上面用法
-    countAlias: 'count',
-    // 需要通过this访问组件内部状态时必须使用普通函数方式
-    countPlusLocalState(state) {
-      return state.count + this.localCount;
-    },
-    doubleCount() {
-      return this.$store.getters.doubleCount;
-    }
-  }),
+  computed: {
+    ...mapState({
+      // 箭头函数方式比较简洁
+      count: state => state.count,
+      // 传递字符串等效于上面用法
+      countAlias: 'count',
+      // 需要通过this访问组件内部状态时必须使用普通函数方式
+      countPlusLocalState(state) {
+        return state.count + this.localCount;
+      },
+      doubleCount() {
+        return this.$store.getters.doubleCount;
+      }
+    }),
+    ...mapGetters(['doubleCount'])
+  },
   methods: {
     // nCount适合用method映射
     nCount(n) {
