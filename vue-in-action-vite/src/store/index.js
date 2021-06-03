@@ -38,10 +38,13 @@ export const store = createStore({
   // 动作 - Actions 动作类似于mutations，它们主要用于:
   // 实现复杂业务逻辑,处理异步操作
   actions: {
-    inc({ commit, dispatch, getters, }) {
-      setTimeout(() => {
-        commit('inc');
-      }, 1000);
+    incAction({ commit, dispatch, getters, }) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          commit('inc');
+          resolve();
+        }, 200);
+      });
     },
   },
 });

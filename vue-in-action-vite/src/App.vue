@@ -21,7 +21,7 @@
   <p @click="inc">{{ count }}</p>
   <p @click="incBy(2)">{{ doubleCount }}</p>
   <p @click="incBy1({ num: 3 })">{{ nCount(3)}}</p>
-  <button @click="handleClick">click</button>
+  <p @click="incAction">{{ count }}</p>
   <nav>
     <NavLink to="https://www.kaikeba.com/">kaikeba</NavLink>
     <NavLink to="/login">login</NavLink>
@@ -38,7 +38,7 @@
 <script>
 import { reactive, onMounted, ref, toRefs, computed, watch } from 'vue';
 import NavLink from '/comps/NavLink.vue';
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import { store } from './store'
 
 export default {
@@ -72,9 +72,7 @@ export default {
       return this.$store.getters.nCount(n);
     },
     ...mapMutations(['inc', 'incBy', 'incBy1']),
-    handleClick() {
-      store.dispatch('inc')
-    },
+    ...mapActions(['incAction'])
   },
   setup() {
     const state = reactive({
