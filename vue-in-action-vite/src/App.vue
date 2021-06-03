@@ -50,6 +50,7 @@ export default {
   //   ...mapState(['count']),
   // },
   computed: {
+    // 对象方式
     ...mapState({
       // 箭头函数方式比较简洁
       count: state => state.count,
@@ -59,10 +60,8 @@ export default {
       countPlusLocalState(state) {
         return state.count + this.localCount;
       },
-      doubleCount() {
-        return this.$store.getters.doubleCount;
-      }
     }),
+    // 数组方式
     ...mapGetters(['doubleCount'])
   },
   methods: {
