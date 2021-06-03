@@ -1,24 +1,26 @@
 <template>
-  <!-- 条件渲染 -->
-  <p v-if="courses.length === 0">没有任何课程信息</p>
+  <div>
+    <!-- 条件渲染 -->
+    <p v-if="courses.length === 0">没有任何课程信息</p>
 
-  <!-- 新增链接 -->
-  <p>
-    <button @click="$router.push('/course/add')">新增</button>
-  </p>
+    <!-- 新增链接 -->
+    <p>
+      <button @click="$router.push('/course/add')">新增</button>
+    </p>
 
-  <!-- 列表渲染 -->
-  <ul>
-    <li
-      v-for="c in courses"
-      :key="c.id"
-      :class="{ active: selectedCourse === c }"
-      @click="showDetail(c)"
-    >
-      <router-link :to="'/course/' + c.id">{{ c.name }}</router-link>
-    </li>
-  </ul>
-  <router-view></router-view>
+    <!-- 列表渲染 -->
+    <ul>
+      <li
+        v-for="c in courses"
+        :key="c.id"
+        :class="{ active: selectedCourse === c }"
+        @click="showDetail(c)"
+      >
+        <router-link :to="'/course/' + c.id">{{ c.name }}</router-link>
+      </li>
+    </ul>
+    <router-view></router-view>
+  </div>
 </template>
 <script>
 import { ref } from "vue";
