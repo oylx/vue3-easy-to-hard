@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import CourseList from '/comps/CourseList.vue';
+// import CourseList from '/comps/CourseList.vue';
 // import CourseAdd from "/comps/CourseAdd.vue";
 // import CourseDetail from "/comps/CourseDetail.vue";
 // import NotFound from "/comps/NotFound.vue";
@@ -7,6 +7,7 @@ import CourseList from '/comps/CourseList.vue';
 
 import Layout from '/layout/index.vue';
 
+const CourseList = () => import('/comps/CourseList.vue')
 const CourseAdd = () => import('/comps/CourseAdd.vue');
 const CourseDetail = () => import('/comps/CourseDetail.vue');
 const NotFound = () => import('/comps/NotFound.vue');
