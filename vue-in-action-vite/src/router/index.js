@@ -7,7 +7,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import Layout from '/layout/index.vue';
 
-const CourseList = () => import('/comps/CourseList.vue')
+const CourseList = () => import('/comps/CourseList.vue');
 const CourseAdd = () => import('/comps/CourseAdd.vue');
 const CourseDetail = () => import('/comps/CourseDetail.vue');
 const NotFound = () => import('/comps/NotFound.vue');
@@ -30,35 +30,36 @@ const Login = () => import('/comps/Login.vue');
     activeMenu: '/example/list'  如果设置一个path, sidebar将会在高亮匹配项
   }
  */
-export const routes = [{
-  path: '/',
-  redirect: '/course',
-  hidden: true,
-}, {
-  path: '/course',
-  component: Layout,
-  meta: {
-    title: '课程列表',
-    icon: 'el-icon-notebook-2',
-  },
-  children: [{
-    path: '',
-    name: 'list',
-    component: CourseList,
+export const routes = [
+  {
+    path: '/',
+    redirect: '/course',
+    hidden: true,
+  }, {
+    path: '/course',
+    component: Layout,
     meta: {
       title: '课程列表',
       icon: 'el-icon-notebook-2',
     },
-  }, {
-    path: '/course/:id',
-    name: 'detail',
-    component: CourseDetail,
-    meta: {
-      title: '课程详情',
-      icon: 'el-icon-view',
-    },
-  }],
-},
+    children: [{
+      path: '',
+      name: 'list',
+      component: CourseList,
+      meta: {
+        title: '课程列表',
+        icon: 'el-icon-notebook-2',
+      },
+    }, {
+      path: '/course/:id',
+      name: 'detail',
+      component: CourseDetail,
+      meta: {
+        title: '课程详情',
+        icon: 'el-icon-view',
+      },
+    }],
+  },
 
   {
     path: '/login',
